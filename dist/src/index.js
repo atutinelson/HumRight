@@ -19,11 +19,7 @@ dotenv.config();
 const app = express();
 //middlewire
 app.use(cors({
-    origin: [
-        "http://localhost:3000",
-        "http://127.0.0.1:3000",
-        "http://192.168.0.105:3000"
-    ],
+    origin: true,
     credentials: true,
 }));
 app.use("/api/auth/*splat", toNodeHandler(auth)); // For ExpressJS v5
