@@ -1,6 +1,6 @@
 import type { Request, Response } from "express";
 import { PrismaClient } from "@prisma/client";
-import * as mpesaService from "../services/mpesaService";
+import * as mpesaService from "../services/mpesaService.js";
 
 const prisma = new PrismaClient();
 

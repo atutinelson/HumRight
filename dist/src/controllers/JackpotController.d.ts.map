@@ -1,0 +1,1 @@
+{"version":3,"file":"JackpotController.d.ts","sourceRoot":"","sources":["../../../src/controllers/JackpotController.ts"],"names":[],"mappings":"AAAA,OAAO,KAAK,EAAE,OAAO,EAAE,QAAQ,EAAE,MAAM,SAAS,CAAC;AAgBjD,qBAAa,iBAAiB;WACf,aAAa,CAAC,GAAG,EAAE,OAAO,EAAE,GAAG,EAAE,QAAQ;WAwDzC,gBAAgB,CAAC,GAAG,EAAE,OAAO,EAAE,GAAG,EAAE,QAAQ;CA+D1D"}

@@ -7,12 +7,12 @@
 
     // Environment Settings
     // See also https://aka.ms/tsconfig/module
-    "module": "ESNext",
-    "moduleResolution": "bundler",
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
     "target": "esnext",
-    "types": [],
+    "types": ["node", "express"],
     // For nodejs:
-    // "lib": ["esnext"],
+    "lib": ["esnext", "DOM"],
     // "types": ["node"],
     // and npm install -D @types/node
 
@@ -20,7 +20,8 @@
     "sourceMap": true,
     "declaration": true,
     "declarationMap": true,
-
+      "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
     // Stricter Typechecking Options
     "noUncheckedIndexedAccess": true,
     "exactOptionalPropertyTypes": true,
@@ -41,8 +42,8 @@
     "noUncheckedSideEffectImports": true,
     "moduleDetection": "force",
     "skipLibCheck": true,
-    "allowImportingTsExtensions": true,
-    "noEmit": true,
+    "noEmit": false
+    
     
   },
   "include": ["src/**/*", "src/types/**/*", "src/data/**/*.json", "prisma/**/*"]

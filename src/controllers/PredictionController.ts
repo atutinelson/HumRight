@@ -1,9 +1,9 @@
 import type { Request, Response } from "express";
 import { PrismaClient } from "@prisma/client";
-import { auth } from "../auth";
+import { auth } from "../auth.js";
 import { fromNodeHeaders } from "better-auth/node";
-import { createPredictionSchema } from "../lib/validator";
-import { any, z } from "zod";
+import { createPredictionSchema } from "../lib/validator.js";
+import {  z } from "zod";
 
 const prisma = new PrismaClient();
 
@@ -112,7 +112,7 @@ export class PredictionController {
 
       // Create predictions for each fixture
       const predictions = await Promise.all(
-        fixtureIds.map(fixtureId =>
+        fixtureIds.map((fixtureId: number) =>
           prisma.prediction.create({
             data: {
               tipText: data.tipText,

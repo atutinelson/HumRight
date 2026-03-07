@@ -4,17 +4,17 @@ import dotenv from "dotenv";
 import morgan from "morgan";
 import helmet from "helmet";
 import bodyParser from "body-parser";
-import { auth } from "./auth";
+import { auth } from "./auth.js";
 import { toNodeHandler } from "better-auth/node";
 
 // Import routes
-import authRoutes from "./routes/auth";
-import planRoutes from "./routes/plans";
-import fixtureRoutes from "./routes/fixtures";
-import predictionRoutes from "./routes/predictions";
-import betRoutes from "./routes/bets";
-import jackpotRoutes from "./routes/jackpots";
-import { AuthController } from "./controllers/AuthController";
+import authRoutes from "./routes/auth.js";
+import planRoutes from "./routes/plans.js";
+import fixtureRoutes from "./routes/fixtures.js";
+import predictionRoutes from "./routes/predictions.js";
+import betRoutes from "./routes/bets.js";
+import jackpotRoutes from "./routes/jackpots.js";
+import { AuthController } from "./controllers/AuthController.js";
 
 //middlewares
 
@@ -53,7 +53,7 @@ app.use("/api/fixtures", fixtureRoutes);
 app.use("/api/predictions", predictionRoutes);
 app.use("/api/bets", betRoutes);
 app.use("/api/jackpots", jackpotRoutes);
-app.use("/api", (await import("./routes/paymentRoutes")).default);
+app.use("/api", (await import("./routes/paymentRoutes.js")).default);
 
 //server
 

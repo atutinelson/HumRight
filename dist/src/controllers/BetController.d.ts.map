@@ -1,0 +1,1 @@
+{"version":3,"file":"BetController.d.ts","sourceRoot":"","sources":["../../../src/controllers/BetController.ts"],"names":[],"mappings":"AAAA,OAAO,KAAK,EAAE,OAAO,EAAE,QAAQ,EAAE,MAAM,SAAS,CAAC;AAKjD,qBAAa,aAAa;WACX,WAAW,CAAC,GAAG,EAAE,OAAO,EAAE,GAAG,EAAE,QAAQ;WA8CvC,cAAc,CAAC,GAAG,EAAE,OAAO,EAAE,GAAG,EAAE,QAAQ;CAgCxD"}

@@ -1,7 +1,11 @@
 // auth.ts
-import { betterAuth } from "better-auth";
+
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import { PrismaClient } from "@prisma/client";
+import { betterAuth }  from "better-auth";
+
+
+
 
 const prisma = new PrismaClient();
 
@@ -15,20 +19,16 @@ export const auth = betterAuth({
   
 
   database: prismaAdapter(prisma,{
-    provider:"mysql"
+    provider:"postgresql"
   }),
   session: {
-    
     cookieCache:{
-        secure: false, // Set to true in production
-        maxAge: 60 * 60 * 24,
-        httpOnly: true,
-        sameSite: "lax"
-    }, // 1 day in seconds
-    fields: {
-      user: {
-        role: "role"
-      }
-    }
-  },
+      maxAge: 60 * 60 * 24, // 1 day in seconds
+      enabled: true,
+      strategy: "compact",
+      refreshCache: { updateAge: 60 * 60 }
+    },
+    expiresIn: 60 * 60 * 24, // optional, 1 day
+    updateAge: 60 * 60, // // 1 day in seconds
+  }
 });

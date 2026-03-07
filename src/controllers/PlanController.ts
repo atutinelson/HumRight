@@ -1,8 +1,8 @@
 import type { Request, Response } from "express";
 import { PrismaClient } from "@prisma/client";
-import { auth } from "../auth";
+import { auth } from "../auth.js";
 import { fromNodeHeaders } from "better-auth/node";
-import { createPlanSchema } from "../lib/validator";
+import { createPlanSchema } from "../lib/validator.js";
 import { z } from "zod";
 
 const prisma = new PrismaClient();
@@ -27,10 +27,13 @@ export class PlanController {
 
   static async getplanPredictionsToday(req: Request, res: Response) {
     try {
-      const planId = parseInt(req.params.planId, 10);
-      if (isNaN(planId)) {
-        return res.status(400).json({ error: "Invalid plan ID" });
+       const planIdParam = req.params.planId;
+
+     if (!planIdParam || Array.isArray(planIdParam)) {
+          return res.status(400).json({ error: "Invalid planId parameter" });
       }
+
+    const planId = parseInt(planIdParam, 10);
       
       // Get today's date range (UTC boundaries) to avoid timezone issues
       const now = new Date();

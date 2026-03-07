@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { FixtureController } from "../controllers/FixtureController";
+import { FixtureController } from "../controllers/FixtureController.js";
 
 const router = Router();
 

@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { PlanController } from "../controllers/PlanController";
+import { PlanController } from "../controllers/PlanController.js";
 
 const router = Router();
 

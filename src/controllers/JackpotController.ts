@@ -1,6 +1,6 @@
 import type { Request, Response } from "express";
 import { PrismaClient } from "@prisma/client";
-import { auth } from "../auth";
+import { auth } from "../auth.js";
 import { fromNodeHeaders } from "better-auth/node";
 import { z } from "zod";
 
@@ -79,6 +79,10 @@ export class JackpotController {
         return res.status(400).json({ error: "Name parameter is required" });
       }
 
+      if (!name || Array.isArray(name)) {
+             return res.status(400).json({ error: "Name parameter is required and must be a string" });
+      }
+
       const jackpots = await prisma.jackpot.findMany({
         where: {
           name: {
@@ -117,7 +121,7 @@ export class JackpotController {
       if (inactiveJackpots.length > 0) {
         return res.status(403).json({
           success: false,
-          message: `${inactiveJackpots[0].name} is not active`,
+          message: `${inactiveJackpots[0]?.name ?? "Jackpot"} is not active`,
           count: 0,
           data: [],
         });

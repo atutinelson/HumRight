@@ -1,8 +1,8 @@
 import type { Request, Response } from "express";
 import { PrismaClient } from "@prisma/client";
-import { auth } from "../auth";
+import { auth } from "../auth.js";
 import { fromNodeHeaders } from "better-auth/node";
-import { createFixtureSchema } from "../lib/validator";
+import { createFixtureSchema } from "../lib/validator.js";
 import { z } from "zod";
 
 const prisma = new PrismaClient();

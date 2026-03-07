@@ -1,5 +1,5 @@
 import type { Request, Response } from "express";
-import { auth } from "../auth";
+import { auth } from "../auth.js";
 import { fromNodeHeaders } from "better-auth/node";
 import { PrismaClient } from "@prisma/client";
 
