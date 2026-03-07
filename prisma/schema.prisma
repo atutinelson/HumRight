@@ -1,0 +1,187 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model TipPlan {
+  id          Int     @id @default(autoincrement())
+  name        String
+  price       Float
+  description String
+  oddRange    String
+  isActive    Boolean @default(true)
+
+  predictions Prediction[]
+  payments    Payment[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Fixture {
+  id          Int          @id @default(autoincrement())
+  matchDate   DateTime
+  homeTeam    String
+  awayTeam    String
+  competition String
+  result      String?
+  status      MatchStatus  @default(SCHEDULED)
+  fixtureTip  String
+  predictions Prediction[]
+  jackpots    Jackpot[]
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+}
+
+model Jackpot {
+  id            Int       @id @default(autoincrement())
+  name          String
+  startDatetime DateTime
+  endDatetime   DateTime
+  amount        Float
+  isActive      Boolean   @default(true)
+  fixtures      Fixture[]
+}
+
+model Prediction {
+  id          Int      @id @default(autoincrement())
+  tipText     String
+  odd         Float
+  tipDate     DateTime
+  isPublished Boolean  @default(false)
+
+  fixture   Fixture @relation(fields: [fixtureId], references: [id])
+  fixtureId Int
+
+  plan   TipPlan? @relation(fields: [planId], references: [id])
+  planId Int?
+
+  result TipResult?
+
+  payments Payment[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Payment {
+  id             Int            @id @default(autoincrement())
+  mobileNumber   String
+  mpesaRequestId String         @unique
+  prediction     Prediction     @relation(fields: [predictionId], references: [id])
+  predictionId   Int
+  plan           TipPlan        @relation(fields: [planId], references: [id])
+  planId         Int
+  amount         Float
+  status         PaymentStatus  @default(PENDING)
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+  tipAccessLogs  TipAccessLog[]
+}
+
+model TipAccessLog {
+  id         Int      @id @default(autoincrement())
+  payment    Payment  @relation(fields: [paymentId], references: [id])
+  paymentId  Int
+  ipAddress  String?
+  accessedAt DateTime @default(now())
+}
+
+model TipResult {
+  id           Int        @id @default(autoincrement())
+  prediction   Prediction @relation(fields: [predictionId], references: [id])
+  predictionId Int        @unique
+  outcome      TipOutcome
+  evaluatedAt  DateTime   @default(now())
+}
+
+enum MatchStatus {
+  SCHEDULED
+  PLAYED
+  CANCELLED
+}
+
+enum PaymentStatus {
+  PENDING
+  SUCCESS
+  FAILED
+}
+
+enum TipOutcome {
+  WIN
+  LOSS
+  VOID
+}
+
+enum Role {
+  ADMIN
+  REGULAR
+}
+
+model User {
+  id            String    @id
+  name          String    @db.Text
+  email         String
+  emailVerified Boolean   @default(false)
+  image         String?   @db.Text
+  createdAt     DateTime  @default(now())
+  role          Role      @default(REGULAR)
+  updatedAt     DateTime  @updatedAt
+  sessions      Session[]
+  accounts      Account[]
+
+  @@unique([email])
+  @@map("user")
+}
+
+model Session {
+  id        String   @id
+  expiresAt DateTime
+  token     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  ipAddress String?  @db.Text
+  userAgent String?  @db.Text
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([token])
+ 
+  @@map("session")
+}
+
+model Account {
+  id                    String    @id
+  accountId             String    @db.Text
+  providerId            String    @db.Text
+  userId                String
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken           String?   @db.Text
+  refreshToken          String?   @db.Text
+  idToken               String?   @db.Text
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?   @db.Text
+  password              String?   @db.Text
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  
+  @@map("account")
+}
+
+model Verification {
+  id         String   @id
+  identifier String   @db.Text
+  value      String   @db.Text
+  expiresAt  DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  
+  @@map("verification")
+}
