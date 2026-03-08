@@ -18,6 +18,7 @@ import { AuthController } from "./controllers/AuthController.js";
 dotenv.config();
 const app = express();
 //middlewire
+app.set("trust proxy", 1);
 app.use(cors({
     origin: true,
     credentials: true,
