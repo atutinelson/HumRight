@@ -22,17 +22,25 @@ import { AuthController } from "./controllers/AuthController.js";
 dotenv.config();
 const app = express();
 
-//middlewire
+// express is behind Render’s proxy; we need to trust it so that
+// `req.secure` is true and the auth cookie will be sent as Secure
+app.set("trust proxy", 1);
+
+// CORS configuration – include prod origin from env when present
+const allowedOrigins: string[] = [
+  "http://localhost:3000",
+  "http://127.0.0.1:3000",
+];
+if (process.env.BASE_URL) {
+  allowedOrigins.push(process.env.BASE_URL);
+}
 
 app.use(cors({
-  origin: [
-    "http://localhost:3000",
-    "http://127.0.0.1:3000",
-    "http://192.168.0.105:3000"
-  ],
-  credentials: true,}));
+  origin: allowedOrigins,
+  credentials: true,
+}));
 
-app.use("/api/auth/*splat", toNodeHandler(auth));// For ExpressJS v5
+app.use("/api/auth/*splat", toNodeHandler(auth)); // For ExpressJS v5
 
 
 
