@@ -9,6 +9,11 @@ export const auth = betterAuth({
         enabled: true,
         autoSignIn: true,
     },
+    trustedOrigins: [
+        "http://localhost:3000",
+        "http://127.0.0.1:3000",
+        "https://humright-1.onrender.com",
+    ],
     baseURL: "https://humright-1.onrender.com",
     database: prismaAdapter(prisma, {
         provider: "postgresql"
