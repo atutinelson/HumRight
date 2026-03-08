@@ -24,8 +24,8 @@ app.use(cors({
 }));
 app.use("/api/auth/*splat", toNodeHandler(auth)); // For ExpressJS v5
 app.use(morgan("common"));
-app.use(helmet());
-app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
+// app.use(helmet());
+// app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.json());
