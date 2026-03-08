@@ -30,6 +30,7 @@ app.set("trust proxy", 1);
 const allowedOrigins: string[] = [
   "http://localhost:3000",
   "http://127.0.0.1:3000",
+  "https://humrightfontend.onrender.com"
 ];
 if (process.env.BASE_URL) {
   allowedOrigins.push(process.env.BASE_URL);

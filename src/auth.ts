@@ -10,7 +10,7 @@ import { betterAuth }  from "better-auth";
 const prisma = new PrismaClient();
 
 
-const BASE_URL = process.env.BASE_URL || "http://localhost:3000";
+const BASE_URL = process.env.BASE_URL || "https://humrightfontend.onrender.com";
 const COOKIE_DOMAIN = process.env.COOKIE_DOMAIN || undefined;
 
 export const auth = betterAuth({
@@ -24,6 +24,7 @@ export const auth = betterAuth({
     BASE_URL,
     "http://localhost:3000",
     "http://127.0.0.1:3000",
+    "https://humrightfontend.onrender.com"
   ],
 
   database: prismaAdapter(prisma,{
@@ -33,7 +34,7 @@ export const auth = betterAuth({
     cookie: {
       domain: COOKIE_DOMAIN,
       sameSite: "none",
-      secure: process.env.NODE_ENV === "production",
+      secure:true,
     },
     cookieCache:{
       maxAge: 60 * 60 * 24, // 1 day in seconds
