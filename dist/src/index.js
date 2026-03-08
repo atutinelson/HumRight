@@ -18,15 +18,14 @@ import { AuthController } from "./controllers/AuthController.js";
 dotenv.config();
 const app = express();
 //middlewire
-app.set("trust proxy", 1);
 app.use(cors({
     origin: true,
     credentials: true,
 }));
 app.use("/api/auth/*splat", toNodeHandler(auth)); // For ExpressJS v5
 app.use(morgan("common"));
-// app.use(helmet());
-// app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
+app.use(helmet());
+app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.json());
